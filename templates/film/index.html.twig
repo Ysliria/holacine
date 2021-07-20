@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FilmController!{% endblock %}
+
+{% block body %}
+    <h1 class="mb-5">Les films</h1>
+
+    <table class="table table-light">
+        <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Année</th>
+            <th>Réalisateur</th>
+            <th>Producteur</th>
+            <th>Acteurs</th>
+            <th>Classification</th>
+            <th>Style</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for film in films %}
+            <tr>
+                <td>{{ film.titre }}</td>
+                <td>{{ film.annee }}</td>
+                <td>{{ film.realisateur }}</td>
+                <td>{{ film.producteur }}</td>
+                <td>
+                    <ul>
+                    {% for acteur in film.acteur %}
+                        <li>{{ acteur }}</li>
+                    {% endfor %}
+                    </ul>
+                </td>
+                <td>{{ film.classification }}</td>
+                <td>{{ film.style }}</td>
+                <td><a class="btn btn-primary" href="{{ path('detail_film', {'id': film.id}) }}">Plus d'informations</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <div class="row">
+        <div class="col-2 offset-10">
+            <a href="{{ path('add_film') }}" class="btn btn-primary"><span class="fas fa-plus">Ajouter</span></a>
+        </div>
+    </div>
+{% endblock %}

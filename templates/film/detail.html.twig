@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FilmController!{% endblock %}
+
+{% block body %}
+    <h1 class="mb-5">{{ film.titre }}</h1>
+
+    <table class="table table-light">
+        <thead>
+        <tr>
+            <th>Année</th>
+            <th>Réalisateur</th>
+            <th>Producteur</th>
+            <th>Acteurs</th>
+            <th>Classification</th>
+            <th>Style</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ film.annee }}</td>
+                <td>{{ film.realisateur }}</td>
+                <td>{{ film.producteur }}</td>
+                <td>
+                    <ul>
+                        {% for acteur in film.acteur %}
+                            <li>{{ acteur }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>{{ film.classification }}</td>
+                <td>{{ film.style }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <section>
+        <h2>Commentaires</h2>
+
+        {% if is_granted('ROLE_USER') %}
+           <a class="btn btn-primary" href="{{ path('add_commentaire', {'id': film.id}) }}">Ajouter un commentaire</a>
+        {% endif %}
+
+        {% if not film.commentaires is empty %}
+            {% for commentaire in film.commentaires %}
+                <article>
+                    <h3>{{ commentaire.titre }}</h3>
+
+                    <p>
+                        {{ commentaire.contenu }}
+                    </p>
+                </article>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info">
+                Il n'y a pas de commentaires !
+            </div>
+        {% endif %}
+    </section>
+
+{% endblock %}
